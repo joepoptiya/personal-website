@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: personal-website
+  labels:
+    app: personal-website
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: personal-website
+  template:
+    metadata:
+      labels:
+        app: personal-website
+    spec:
+      containers:
+        - name: personal-website
+          image: joepoptiya/personal-website:latest # <-- Set your DockerHub image/tag!
+          ports:
+            - containerPort: 3000
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "250m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
