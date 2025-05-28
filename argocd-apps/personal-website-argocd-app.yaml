@@ -2,6 +2,9 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: personal-website-helm
+  namespace: argocd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
@@ -11,6 +14,9 @@ spec:
     helm:
       valueFiles:
         - values.yaml
+      parameters:
+        - name: "image.tag"
+          value: "latest"
   destination:
     server: https://kubernetes.default.svc
     namespace: default
@@ -18,3 +24,7 @@ spec:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+  revisionHistoryLimit: 3
