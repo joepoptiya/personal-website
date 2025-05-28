@@ -1,0 +1,15 @@
+Thank you for installing {{ .Chart.Name }}.
+
+Your application has been deployed with the following configuration:
+- Name: {{ include "personal-website.fullname" . }}
+- Replicas: {{ .Values.replicaCount }}
+- Image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+
+To access your application:
+  http://{{ .Values.ingress.host }}
+
+To check the status of your deployment:
+  kubectl get deployment {{ include "personal-website.fullname" . }} --namespace {{ .Release.Namespace }}
+
+To check the pods:
+  kubectl get pods --namespace {{ .Release.Namespace }} -l "app.kubernetes.io/name={{ include "personal-website.name" . }},app.kubernetes.io/instance={{ .Release.Name }}"
